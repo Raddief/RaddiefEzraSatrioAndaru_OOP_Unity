@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -57,16 +59,27 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = rb.velocity.normalized * maxSpeed.magnitude;
         }
+
+        //Debug.Log(rb.velocity.x);
+        //Debug.Log(rb.velocity.y);
+        
+        MoveBound(); // aplly boundary
+        
+        
     }
+
 
     public Vector2 GetFriction()
     {
-        return rb.velocity != Vector2.zero ?  moveFriction : stopFriction ;
+        return rb.velocity != Vector2.zero ?  moveFriction : stopFriction ; //friction
     }
 
     public void MoveBound()
     {
-    
+    rb.position = new Vector2(
+            Mathf.Clamp(rb.position.x, -8.7f, 8.7f), //bound max left right
+            Mathf.Clamp(rb.position.y, -5f, 4.5f) //bound max top down
+        );
     }
 
     public bool IsMoving()
@@ -74,3 +87,4 @@ public class PlayerMovement : MonoBehaviour
         return moveDirection != Vector2.zero;
     }
 }
+
