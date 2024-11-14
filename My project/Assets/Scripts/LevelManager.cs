@@ -9,10 +9,10 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        GameManager.Instance.LevelManager = this;
+    
     }
 
-    IEnumerator LoadSceneAsync(string Main)
+    IEnumerator LoadSceneAsync(string sceneName)
     {
         if (animator != null)
         {
@@ -21,7 +21,7 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
 
-        SceneManager.LoadSceneAsync(Main);
+        SceneManager.LoadSceneAsync(sceneName);
 
         Player.Instance.transform.position = new(0, -4.5f);
 
@@ -32,9 +32,9 @@ public class LevelManager : MonoBehaviour
     }
 
         
-    public void LoadScene(string Main)
+    public void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadSceneAsync(Main));
+        StartCoroutine(LoadSceneAsync(sceneName));
     }
 }
 
