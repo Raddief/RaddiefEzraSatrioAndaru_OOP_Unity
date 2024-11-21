@@ -13,12 +13,15 @@ GameObject:
   - component: {fileID: 7478736830050385048}
   - component: {fileID: 8780567534662136104}
   - component: {fileID: 8779461318896396785}
-  - component: {fileID: 8126681841332692217}
   - component: {fileID: 8558037717357563760}
   - component: {fileID: 1459576332864403101}
+  - component: {fileID: 4031721816157810645}
+  - component: {fileID: 821417058183273690}
+  - component: {fileID: 3874628163110892594}
+  - component: {fileID: 1999167126822120265}
   m_Layer: 0
   m_Name: EnemyBoss
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,13 +34,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269456017904914724}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: -0.07644892, y: -1.7864947, z: 0.065319985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!50 &393212328244925087
 Rigidbody2D:
   serializedVersion: 4
@@ -109,7 +112,7 @@ SpriteRenderer:
   m_Sprite: {fileID: 5617511777948925332, guid: f9d1ac32c3674174d83634f85ef8c4c0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
-  m_FlipY: 1
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1.3888888}
   m_AdaptiveModeThreshold: 0.5
@@ -130,6 +133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
+  enemyKilledEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8779461318896396785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,24 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 053d45d4fa9e76c42998d8115bdf9504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootIntervalInSeconds: 3
-  bulletPrefab: {fileID: 0}
+  shootIntervalInSeconds: 1
+  bullet: {fileID: 0}
   bulletSpawnPoint: {fileID: 3657441220619391172}
-  parentTransform: {fileID: 0}
---- !u!114 &8126681841332692217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269456017904914724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 351c4c723d8688f47aa320e292b9c192, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletSpeed: 20
-  damage: 10
+  parentTransform: {fileID: 3657441220619391172}
 --- !u!114 &8558037717357563760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,9 +165,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: 1
-  speed: 2
-  weapon: {fileID: 0}
-  shootInterval: 2
+  enemyKilledEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  moveSpeed: 5
 --- !u!61 &1459576332864403101
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -208,7 +201,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.9}
+  m_Offset: {x: 0, y: 0.88}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: -0.14999999}
@@ -221,3 +214,59 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.32}
   m_EdgeRadius: 0
+--- !u!114 &4031721816157810645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269456017904914724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 195217520232aa74bb5b10db4c37cb3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkingCount: 7
+  blinkInterval: 0.1
+  blinkMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  isInvincible: 0
+--- !u!114 &821417058183273690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269456017904914724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb18a966b3390d74abcb57abe444b937, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 0}
+  damage: 10
+--- !u!114 &3874628163110892594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269456017904914724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810acb93c8edfcf4399d84abe6df5635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 700
+--- !u!114 &1999167126822120265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269456017904914724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb363eeb98923a4479be8c02a07b8fca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 3874628163110892594}

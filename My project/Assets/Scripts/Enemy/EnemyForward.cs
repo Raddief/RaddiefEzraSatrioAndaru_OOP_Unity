@@ -2,41 +2,27 @@ using UnityEngine;
 
 public class EnemyForward : Enemy
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float speed = 2f;
-    private Vector2 direction = Vector2.down;
+    [SerializeField] private float moveSpeed = 5f;
 
-    protected new void Start()
+    private void Awake()
     {
-        base.Start();
-
-        // Spawn from the top of the screen
-        float spawnX = Random.Range(-5f, 5f);
-        float spawnY = 10f;
-        transform.position = new Vector3(spawnX, spawnY, 0f); // Ensure z is 0
-        transform.rotation = Quaternion.Euler(0, 0, 0); // Set initial rotation
+        PickRandomPositions();
     }
 
     private void Update()
     {
-        Move();
+        transform.Translate(moveSpeed * Time.deltaTime * Vector2.up);
 
-        // Deactivate when out of bounds
-        if (transform.position.y < -10f)
+        if (Camera.main.WorldToViewportPoint(new(transform.position.x, transform.position.y, transform.position.z)).y < -0.05f)
         {
-            gameObject.SetActive(false); // Deactivate the enemy
+            PickRandomPositions();
         }
-
-        // Ensure rotation on the Z-axis is always 0
-        Vector3 rotationAngles = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(rotationAngles.x, rotationAngles.y, 0);
     }
 
-    private void Move()
+    private void PickRandomPositions()
     {
-        // Move the enemy and ensure z is always 0
-        Vector3 newPosition = transform.position + (Vector3)(direction * speed * Time.deltaTime);
-        newPosition.z = 0f; // Ensure z is 0
-        transform.position = newPosition;
+        Vector2 randPos = new(Random.Range(0.1f, 0.99f), 1.1f);
+
+        transform.position = Camera.main.ViewportToWorldPoint(randPos) + new Vector3(0, 0, 10);
     }
 }

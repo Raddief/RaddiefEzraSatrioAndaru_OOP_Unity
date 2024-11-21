@@ -2,59 +2,54 @@ using UnityEngine;
 
 public class EnemyBoss : Enemy
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float speed = 2f;
-    private Vector2 direction;
+    [SerializeField] private float moveSpeed = 5f;
 
-    [Header("Weapon Settings")]
-    [SerializeField] private Weapon weapon; // Assuming Weapon is a script managing shooting
-    [SerializeField] private float shootInterval = 2f;
-    private float shootTimer;
+    private Vector2 dir;
 
-    protected new void Start()
+    private void Awake()
     {
-        base.Start();
-
-        // Initialize the weapon component
-        weapon = GetComponentInChildren<Weapon>();
-
-        // Randomly spawn from either left or right side
-        float spawnX = Random.Range(0, 2) == 0 ? -10f : 10f;
-        float spawnY = Random.Range(-5f, 5f);
-        transform.position = new Vector3(spawnX, spawnY, 0f);
-        transform.rotation = Quaternion.Euler(0, 0, 0); // Set initial rotation
+        PickRandomPositions();
     }
 
     private void Update()
     {
-        Move();
+        transform.Translate(moveSpeed * Time.deltaTime * dir);
 
-        // Reverse direction when out of bounds
-        if (transform.position.x < -10f || transform.position.x > 10f)
+        Vector3 ePos = Camera.main.WorldToViewportPoint(new(transform.position.x, transform.position.y, transform.position.z));
+
+        if (ePos.x < -0.05f && dir == Vector2.right)
         {
-            direction = -direction;
+            PickRandomPositions();
         }
-
-        Shoot();
-
-        // Ensure rotation on the Z-axis is always 0
-        Vector3 rotationAngles = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(rotationAngles.x, rotationAngles.y, 0);
+        if (ePos.x > 1.05f && dir == Vector2.left)
+        {
+            PickRandomPositions();
+        }
     }
 
-    private void Move()
+    private void PickRandomPositions()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
-    }
+        Vector2 randPos;
 
-    private void Shoot()
-    {
-        shootTimer += Time.deltaTime;
-
-        if (shootTimer >= shootInterval)
+        if (Random.Range(-1, 1) >= 0)
         {
-            weapon.Shoot(); // Call the Shoot method from the Weapon class
-            shootTimer = 0f;
+            dir = Vector2.right;
         }
+        else
+        {
+            dir = Vector2.left;
+        }
+
+        if (dir == Vector2.right)
+        {
+            randPos = new(1.1f, Random.Range(0.1f, 0.95f));
+        }
+        else
+        {
+            randPos = new(-0.01f, Random.Range(0.1f, 0.95f));
+        }
+
+        transform.position = Camera.main.ViewportToWorldPoint(randPos) + new Vector3(0, 0, 10);
     }
 }
+    

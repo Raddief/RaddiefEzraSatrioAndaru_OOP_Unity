@@ -1,49 +1,29 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Enemy Stats")]
-    public int level = 1; // Default level for the enemy
+    [SerializeField] protected int level;
 
-    protected Rigidbody2D rb;
-    protected SpriteRenderer spriteRenderer;
+    public UnityEvent enemyKilledEvent;
 
-    private void Awake()
+    private void Start()
     {
-        // Initialize the components
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // Ensure the enemy is not affected by gravity
-        rb.gravityScale = 0;
-
-        // Check if the current scene is "Main"
-        if (SceneManager.GetActiveScene().name != "Main")
-        {
-            gameObject.SetActive(false);
-        }
+        enemyKilledEvent ??= new UnityEvent();
     }
 
-    protected void Start()
+    public void SetLevel(int level)
     {
-        // Ensure the enemy faces the player at the start
-        if (gameObject.activeSelf)
-        {
-            FacePlayer();
-        }
+        this.level = level;
     }
 
-    private void FacePlayer()
+    public int GetLevel()
     {
-        // Assume there's a Player GameObject with the tag "Player"
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player != null)
-        {
-            // Rotate the enemy to face the player
-            Vector3 direction = player.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            rb.rotation = angle;
-        }
+        return level;
     }
-}
+
+    private void OnDestroy()
+    {
+        enemyKilledEvent.Invoke();
+    }
+    }

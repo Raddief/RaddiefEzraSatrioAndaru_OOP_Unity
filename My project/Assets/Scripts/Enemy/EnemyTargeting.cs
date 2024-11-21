@@ -2,58 +2,65 @@ using UnityEngine;
 
 public class EnemyTargeting : Enemy
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float speed = 2f;
-    private Transform playerTransform;
+    public float speed = 30f;
 
-    protected new void Start()
+    private Transform player;
+    Rigidbody2D rb;
+
+    void Start()
     {
-        base.Start();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-        // Find the player object
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+    private void Awake()
+    {
+        PickRandomPositions();
+    }
+
+    void FixedUpdate()
+    {
         if (player != null)
         {
-            playerTransform = player.transform;
+            Vector2 direction = (player.position - transform.position).normalized;
+            float angle = Mathf.Atan2(direction.y, direction.x);
+
+            rb.rotation = angle;
+            rb.velocity = speed * Time.deltaTime * direction;
         }
-    }
-
-    private void Update()
-    {
-        if (playerTransform != null)
-        {
-            MoveTowardsPlayer();
-            RotateTowardsPlayer();
-        }
-    }
-
-    private void MoveTowardsPlayer()
-    {
-        // Calculate the direction towards the player
-        Vector2 direction = (playerTransform.position - transform.position).normalized;
-
-        // Move the enemy towards the player
-        transform.Translate(direction * speed * Time.deltaTime, Space.World);
-    }
-
-    private void RotateTowardsPlayer()
-    {
-        // Calculate the direction towards the player
-        Vector2 direction = (playerTransform.position - transform.position).normalized;
-
-        // Calculate the angle between the enemy and the player
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Update the rotation to face the player
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the enemy collides with the player
-        if (other.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject); // Destroy the enemy
+            Destroy(gameObject);
         }
+    }
+
+    private void PickRandomPositions()
+    {
+        Vector2 randPos;
+        Vector2 dir;
+
+        if (Random.Range(-1, 1) >= 0)
+        {
+            dir = Vector2.right;
+        }
+        else
+        {
+            dir = Vector2.left;
+        }
+
+        if (dir == Vector2.right)
+        {
+            randPos = new(1.1f, Random.Range(0.1f, 0.95f));
+        }
+        else
+        {
+            randPos = new(-0.01f, Random.Range(0.1f, 0.95f));
+        }
+
+        transform.position = Camera.main.ViewportToWorldPoint(randPos) + new Vector3(0, 0, 10);
     }
 }

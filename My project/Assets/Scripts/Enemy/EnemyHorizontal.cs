@@ -2,47 +2,53 @@ using UnityEngine;
 
 public class EnemyHorizontal : Enemy
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float speed = 2f;
-    private Vector2 direction;
+    [SerializeField] private float moveSpeed = 5f;
 
-    protected new void Start()
+    private Vector2 dir;
+
+    private void Awake()
     {
-        base.Start();
-
-        // Randomly spawn from either left or right side
-        float spawnX = Random.Range(0, 2) == 0 ? -10f : 10f;
-        float spawnY = Random.Range(-5f, 5f);
-        transform.position = new Vector3(spawnX, spawnY, 0f);
-        transform.rotation = Quaternion.Euler(0, 0, 0); // Set initial rotation
-
-        // Set direction based on spawn position
-        if (spawnX < 0) 
-        {
-            direction = Vector2.right;
-        }
-        else 
-        {
-            direction = Vector2.left;
-        }
+        PickRandomPositions();
     }
 
     private void Update()
     {
-        Move();
+        transform.Translate(moveSpeed * Time.deltaTime * dir);
 
-        // Reverse direction when out of bounds
-        if (transform.position.x < -10f || transform.position.x > 10f)
+        Vector3 ePos = Camera.main.WorldToViewportPoint(new(transform.position.x, transform.position.y, transform.position.z));
+
+        if (ePos.x < -0.05f && dir == Vector2.right)
         {
-            direction = -direction;
+            PickRandomPositions();
         }
-
-        Vector3 rotationAngles = transform.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(rotationAngles.x, rotationAngles.y, 0);
+        if (ePos.x > 1.05f && dir == Vector2.left)
+        {
+            PickRandomPositions();
+        }
     }
 
-    private void Move()
+    private void PickRandomPositions()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        Vector2 randPos;
+
+        if (Random.Range(-1, 1) >= 0)
+        {
+            dir = Vector2.right;
+        }
+        else
+        {
+            dir = Vector2.left;
+        }
+
+        if (dir == Vector2.right)
+        {
+            randPos = new(1.1f, Random.Range(0.1f, 0.95f));
+        }
+        else
+        {
+            randPos = new(-0.01f, Random.Range(0.1f, 0.95f));
+        }
+
+        transform.position = Camera.main.ViewportToWorldPoint(randPos) + new Vector3(0, 0, 10);
     }
 }
