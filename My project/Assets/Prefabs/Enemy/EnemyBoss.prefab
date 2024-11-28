@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 393212328244925087}
   - component: {fileID: 7478736830050385048}
   - component: {fileID: 8780567534662136104}
-  - component: {fileID: 8779461318896396785}
   - component: {fileID: 8558037717357563760}
   - component: {fileID: 1459576332864403101}
   - component: {fileID: 4031721816157810645}
@@ -38,7 +37,8 @@ Transform:
   m_LocalPosition: {x: -0.07644892, y: -1.7864947, z: 0.065319985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3292067956008003241}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!50 &393212328244925087
@@ -136,22 +136,6 @@ MonoBehaviour:
   enemyKilledEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8779461318896396785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269456017904914724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 053d45d4fa9e76c42998d8115bdf9504, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootIntervalInSeconds: 1
-  bullet: {fileID: 0}
-  bulletSpawnPoint: {fileID: 3657441220619391172}
-  parentTransform: {fileID: 3657441220619391172}
 --- !u!114 &8558037717357563760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +153,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   moveSpeed: 5
+  bulletPrefab: {fileID: 0}
+  bulletSpawnPoint: {fileID: 3657441220619391172}
+  shootInterval: 3
 --- !u!61 &1459576332864403101
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -228,7 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blinkingCount: 7
   blinkInterval: 0.1
-  blinkMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  blinkMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   isInvincible: 0
 --- !u!114 &821417058183273690
 MonoBehaviour:
@@ -256,7 +243,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810acb93c8edfcf4399d84abe6df5635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 700
+  maxHealth: 100
 --- !u!114 &1999167126822120265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,3 +257,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 3874628163110892594}
+  OnHitboxCollide:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!1 &4254837923851722651
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3292067956008003241}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3292067956008003241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254837923851722651}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -1, w: 0}
+  m_LocalPosition: {x: 1.437, y: -1.921, z: -0.065319985}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3657441220619391172}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; height: 49px;">
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="HEALTH:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Health" style="color: rgb(255, 255, 255); -unity-text-align: middle-left; -unity-font-style: bold;" />
+            <ui:Label tabindex="-1" text="POINT:" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Point" style="color: rgb(255, 255, 255); -unity-font-style: bold;" />
+            <ui:Label tabindex="-1" text="ENEMIES LEFT: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="EnemiesLeft" style="-unity-text-align: upper-right; justify-content: center; -unity-font-style: bold; color: rgb(255, 255, 255); top: -62px;" />
+            <ui:Label tabindex="-1" text="WAVE: " parse-escape-sequences="true" display-tooltip-when-elided="true" name="Wave" style="white-space: nowrap; -unity-text-align: upper-right; color: rgb(255, 255, 255); -unity-font-style: bold; height: 27px; top: -62px;" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; -unity-text-align: upper-right; justify-content: flex-start; align-items: stretch; top: -217px; align-self: stretch;" />
+    </ui:VisualElement>
+</ui:UXML>

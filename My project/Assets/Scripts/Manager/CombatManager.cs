@@ -1,49 +1,52 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Assertions;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    public static CombatManager instance;
-    
     public EnemySpawner[] enemySpawners;
+
     public float timer = 0;
     [SerializeField] private float waveInterval = 5f;
-    public int waveNumber = 1;
-    public int totalEnemies = 0;
 
-    
-    void Start()
+    public int waveNumber = 1;
+
+    public int totalEnemies = 0;
+    public int points = 0;
+
+    private void OnEnable()
     {
+        foreach (EnemySpawner spawner in enemySpawners)
+        {
+            spawner.combatManager = this;
+        }
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        timer += Time.deltaTime;
+        if (totalEnemies == 0)
+            timer += Time.deltaTime;
 
         if (timer >= waveInterval)
         {
-            StartNewWave();
+            foreach (EnemySpawner spawner in enemySpawners)
+            {
+                if (spawner.spawnedEnemy.GetLevel() <= waveNumber && !spawner.isSpawning)
+                {
+                    spawner.ResetSpawnCount();
+
+                    totalEnemies += spawner.spawnCount;
+
+                    spawner.SpawnEnemy();
+                }
+            }
+
+            waveNumber++;
             timer = 0;
         }
     }
 
-    void StartNewWave()
+    public void IncreaseKill()
     {
-        waveNumber++;
-        totalEnemies = CalculateTotalEnemiesForWave(waveNumber);
-
-        foreach (var spawner in enemySpawners)
-        {
-            spawner.isSpawning = true;
-            spawner.spawnCount = totalEnemies / enemySpawners.Length;
-        }
-    }
-
-    int CalculateTotalEnemiesForWave(int waveNumber)
-    {
-        // Implement your own logic to calculate the number of enemies based on the wave number
-        return waveNumber * 10; // Example: Increase the number of enemies by 10 each wave
+        totalEnemies--;
     }
 }

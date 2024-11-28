@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 3256628407335422047}
   - component: {fileID: 4565027422882790614}
   - component: {fileID: 3116380143609790565}
-  - component: {fileID: 1076125170363350488}
   - component: {fileID: 145455721246471700}
   m_Layer: 0
   m_Name: EnemyForward
@@ -162,7 +161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810acb93c8edfcf4399d84abe6df5635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 50
 --- !u!114 &3256628407335422047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,22 +221,6 @@ BoxCollider2D:
   m_Size: {x: 0.32, y: 0.3}
   m_EdgeRadius: 0
 --- !u!114 &3116380143609790565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7936940042820772696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 195217520232aa74bb5b10db4c37cb3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blinkingCount: 7
-  blinkInterval: 0.1
-  blinkMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  isInvincible: 0
---- !u!114 &1076125170363350488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

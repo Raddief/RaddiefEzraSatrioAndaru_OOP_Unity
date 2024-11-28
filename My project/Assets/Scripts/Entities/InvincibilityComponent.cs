@@ -14,7 +14,7 @@ public class InvincibilityComponent : MonoBehaviour
     public bool isInvincible = false;
 
     // Start is called before the first frame update
-    private void Awake()
+    private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalMaterial = spriteRenderer.material;

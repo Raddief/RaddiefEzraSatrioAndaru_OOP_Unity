@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 2441854112075891026}
   - component: {fileID: 5664721906364568459}
   - component: {fileID: 1247108258223122334}
-  - component: {fileID: 4787094625577638265}
   - component: {fileID: 5450738466352213335}
   m_Layer: 0
   m_Name: EnemyHorizontal
@@ -222,22 +221,6 @@ BoxCollider2D:
   m_Size: {x: 0.33, y: 0.31}
   m_EdgeRadius: 0
 --- !u!114 &1247108258223122334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8627553344703635808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 195217520232aa74bb5b10db4c37cb3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blinkingCount: 7
-  blinkInterval: 0.1
-  blinkMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  isInvincible: 0
---- !u!114 &4787094625577638265
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
