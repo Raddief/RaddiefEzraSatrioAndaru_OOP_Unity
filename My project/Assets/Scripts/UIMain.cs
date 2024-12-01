@@ -17,6 +17,10 @@ public class UIMain : MonoBehaviour
     void Start()
     {
         InitializeUI();
+    }
+
+    void Update()
+    {
         UpdateUI();
     }
 
@@ -25,6 +29,9 @@ public class UIMain : MonoBehaviour
         uiRoot = GetComponent<UIDocument>()?.rootVisualElement;
         combatManager = FindObjectOfType<CombatManager>();
         healthComponent = FindObjectOfType<HealthComponent>();
+
+        if (combatManager == null) Debug.LogError("CombatManager not found");
+        if (healthComponent == null) Debug.LogError("HealthComponent not found");
 
         if (uiRoot != null)
         {
@@ -37,9 +44,16 @@ public class UIMain : MonoBehaviour
 
     public void UpdateUI()
     {
-        if (combatManager == null || healthComponent == null) return;
+        if (combatManager == null || healthComponent == null) 
+        {
+            Debug.LogError("CombatManager or HealthComponent is null");
+            return;
+        }
+
+        Debug.Log("UpdateUI called");
 
         int playerHealth = healthComponent.GetHealth();
+        Debug.Log("Player Health: " + playerHealth);
 
         if (waveLabel != null)
             waveLabel.text = "Wave: " + combatManager.waveNumber;
